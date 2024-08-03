@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>fetchBy Page</title>
+<style>
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+	background-color: #B4B4B4;
+}
+
+.form-container {
+	padding: 20px;
+	background-color: #ffffff;
+	border: 1px solid #cccccc;
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	width: 300px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.form-container label {
+	margin-bottom: 10px;
+}
+
+.form-container input {
+	padding: 10px;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	margin-bottom: 15px;
+}
+
+button {
+	padding: 10px 20px;
+	font-size: 16px;
+	border: none;
+	margin: 10px;
+}
+
+button:hover {
+	background-color: black;
+	color: white;
+}
+
+.table-container {
+	width: 80%; 
+	margin: 0 auto;
+}
+
+table {
+	width: 100%; 
+	border-collapse: collapse;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	background-color: white;
+}
+
+table, th, td {
+	border: 1px solid #ccc;
+}
+
+th, td {
+	padding: 8px;
+	text-align: left;
+}
+
+th {
+	background-color: black;
+	color: white;
+	font-size: 20px;
+}
+
+button {
+	padding: 10px 20px;
+	font-size: 16px;
+	border: none;
+	margin: 10px;
+}
+
+button:hover {
+	background-color: black;
+	color: white;
+}
+
+a {
+	align: center;
+}
+</style>
+</head>
+<body>
+	<div th:if="${field}">
+		<div class="form-container">
+			<form th:action="'/fetch/'+${field}" method="post">
+				<h3>
+					Search by <span th:text="${field}"></span>
+				</h3>
+				<input type="text" th:name="${field}" required>
+
+				<button type="submit">Search</button>
+			</form>
+			<a href="/"><button>Home</button></a>
+		</div>
+	</div>
+	
+	<div th:if="${fail}">
+		<div class="form-container">
+			<h3 style="color:green" th:text="${fail}"></h3>
+			<a href="/"><button>Home</button></a>
+		</div>
+	</div>
+	
+	<div th:if="${success}">
+		<div class="table-container">
+		<h2>Student List</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Mobile</th>
+					<th>Gender</th>
+					<th>Maths</th>
+					<th>Science</th>
+					<th>English</th>
+					<th>Percentage</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="std : ${list}">
+					<td th:text="${std.name}"></td>
+					<td th:text="${std.mobile}"></td>
+					<td th:text="${std.gender}"></td>
+					<td th:text="${std.maths}"></td>
+					<td th:text="${std.sci}"></td>
+					<td th:text="${std.eng}"></td>
+					<td th:text="${(std.maths+std.sci+std.eng)/3.0}"></td>
+				    <td><a th:href="'/edit/'+${std.id}"><button>Edit</button></a></td>
+				    <td><a th:href="'/delete/'+${std.id}"><button>Delete</button></a></td>
+				</tr>
+			</tbody>
+		</table>
+		<a href="/"><button>Home</button></a>
+	</div>
+	</div>
+</body>
+</html>

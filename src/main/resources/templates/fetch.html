@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Fetch Page</title>
+<style>
+body {
+	background-color: #B4B4B4;
+}
+
+.table-container {
+	width: 80%; 
+	margin: 0 auto;
+}
+
+table {
+	width: 100%; 
+	border-collapse: collapse;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	background-color: white;
+}
+
+table, th, td {
+	border: 1px solid #ccc;
+}
+
+th, td {
+	padding: 8px;
+	text-align: left;
+}
+
+th {
+	background-color: black;
+	color: white;
+	font-size: 20px;
+}
+
+button {
+	padding: 10px 20px;
+	font-size: 16px;
+	border: none;
+	margin: 10px;
+}
+
+button:hover {
+	background-color: black;
+	color: white;
+}
+
+a {
+	align: center;
+}
+</style>
+</head>
+<body>
+    <h3 th:if="${fail}" style="color:green" th:text="${fail}"></h3>
+    <h3 th:if="${msg}" style="color:green" th:text="${msg}"></h3>
+    <h3 th:if="${success}" style="color:green" th:text="${success}"></h3>
+	<div class="table-container">
+		<h2>Student List</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Mobile</th>
+					<th>Gender</th>
+					<th>Maths</th>
+					<th>Science</th>
+					<th>English</th>
+					<th>Percentage</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="std : ${datas}">
+					<td th:text="${std.name}"></td>
+					<td th:text="${std.mobile}"></td>
+					<td th:text="${std.gender}"></td>
+					<td th:text="${std.maths}"></td>
+					<td th:text="${std.sci}"></td>
+					<td th:text="${std.eng}"></td>
+					<td th:text="${(std.maths+std.sci+std.eng)/3.0}"></td>
+				    <td><a th:href="'/edit/'+${std.id}"><button>Edit</button></a></td>
+				    <td><a th:href="'/delete/'+${std.id}"><button>Delete</button></a></td>
+				</tr>
+			</tbody>
+		</table>
+		<a href="/fetch/name"><button>Fetch By Name</button></a>
+	    <a href="/fetch/mobile"><button>Fetch By Mobile</button></a>
+		<a href="/fetch/gender"><button>Fetch By Gender</button></a>
+		<a href="/fetch/marks"><button>Fetch By Marks</button></a>
+		<a href="/fetch/percentage"><button>Fetch By Percentage</button></a><br>
+		<a href="/"><button>Home</button></a>
+	</div>
+</body>
+</html>
